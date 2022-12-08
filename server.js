@@ -3,6 +3,7 @@ const fetch = (...args) =>
 const express = require("express");
 const app = express();
 const cors = require("cors");
+require("dotenv").config();
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
@@ -10,7 +11,7 @@ app.use(cors());
 
 app.get("/comics", async (req, res) => {
   const response = await fetch(
-    "https://comicvine.gamespot.com/api/issues/?api_key=a25c2fc6bd3e2043008fe06b88ae092009134446&format=json"
+    `https://comicvine.gamespot.com/api/issues/?api_key=${process.env.API_KEY}&format=json`
   );
   res.json(await response.json());
 });
@@ -18,7 +19,7 @@ app.get("/comics", async (req, res) => {
 app.get("/comic", async (req, res) => {
   const id = req.query.id;
   const response = await fetch(
-    `https://comicvine.gamespot.com/api/issue/4000-${id}/?api_key=a25c2fc6bd3e2043008fe06b88ae092009134446&format=json`
+    `https://comicvine.gamespot.com/api/issue/4000-${id}/?api_key=${process.env.API_KEY}&format=json`
   );
   res.json(await response.json());
 });
